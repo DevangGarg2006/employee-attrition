@@ -1,22 +1,27 @@
 from flask import Flask, render_template, request
 import joblib
 import pandas as pd
+import os
 
 app = Flask(__name__)
 
 model = joblib.load("model/attrition_model.pkl")
 columns = joblib.load("model/columns.pkl")
 
-@app.route("/", methods=["GET", "POST"])
+
+@app.route("/")
 def home():
+    return render_template("home.html")
+
+
+@app.route("/predict", methods=["GET", "POST"])
+def predict():
     prediction = None
     probability = None
 
     if request.method == "POST":
-        # Create empty input with all features
         input_data = dict.fromkeys(columns, 0)
 
-        # Fill form values
         input_data["Age"] = int(request.form["Age"])
         input_data["DailyRate"] = int(request.form["DailyRate"])
         input_data["DistanceFromHome"] = int(request.form["DistanceFromHome"])
@@ -35,9 +40,25 @@ def home():
         prediction = "High Attrition Risk" if pred == 1 else "Low Attrition Risk"
         probability = round(prob * 100, 2)
 
-    return render_template("index.html", prediction=prediction, probability=probability)
+    return render_template("predict.html",
+                           prediction=prediction,
+                           probability=probability)
 
-import os
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+
+@app.route("/dashboard")
+def dashboard():
+    return render_template("dashboard.html")
+
+
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
