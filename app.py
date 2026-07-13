@@ -8,7 +8,7 @@ app = Flask(__name__)
 model = joblib.load("model/attrition_model.pkl")
 columns = joblib.load("model/columns.pkl")
 
-passsword=SRhealth249802!
+
 
 @app.route("/")
 def home():
