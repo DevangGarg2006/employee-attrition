@@ -8,6 +8,16 @@ app = Flask(__name__)
 model = joblib.load("model/attrition_model.pkl")
 columns = joblib.load("model/columns.pkl")
 
+AWS_ACCESS_KEY = "AKIAIOSFODNN7EXAMPLE123"
+
+# GitHub Token
+GITHUB_TOKEN = "ghp_aBcDeFgHiJkLmNoPqRsTuVwXyZ123456ab"
+
+# Stripe Live Key
+STRIPE_KEY = "sk_live_4eC39HqLyjWDarjtT1zdp7dc1234567890"
+
+# Hardcoded password
+password = "superSecret123"
 
 
 @app.route("/")
